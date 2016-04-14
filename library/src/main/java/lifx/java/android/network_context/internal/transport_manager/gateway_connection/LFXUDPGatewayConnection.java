@@ -8,6 +8,8 @@
 
 package lifx.java.android.network_context.internal.transport_manager.gateway_connection;
 
+import android.util.Log;
+
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
@@ -267,17 +269,32 @@ public class LFXUDPGatewayConnection extends LFXGatewayConnection implements Soc
         socket.close();
         if(heartbeatTimer!=null) {
             heartbeatTimer.cancel();
-            heartbeatTimer.purge();
+            try {
+                heartbeatTimer.purge();
+            }
+            catch (java.lang.NullPointerException e) {
+                Log.e(TAG, "wtf");
+            }
             heartbeatTimer = null;
         }
         if(outboxTimer!=null) {
             outboxTimer.cancel();
-            outboxTimer.purge();
+            try {
+                outboxTimer.purge();
+            }
+            catch (java.lang.NullPointerException e) {
+                Log.e(TAG, "wtf");
+            }
             outboxTimer = null;
         }
         if (idleTimeoutTimer != null) {
             idleTimeoutTimer.cancel();
-            idleTimeoutTimer.purge();
+            try {
+                idleTimeoutTimer.purge();
+            }
+            catch (java.lang.NullPointerException e) {
+                Log.e(TAG, "wtf");
+            }
             idleTimeoutTimer=null;
         }
     }
